@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Calculator</title>
+
+    <!-- Connecting CSS file -->
+    <link rel="stylesheet" href="cal.css">
+
+</head>
+
+<body>
+
+    <div class="calculator">
+
+        <h1>Calculator</h1>
+
+        <input type="text" id="display" value="0" readonly>
+
+        <div class="buttons">
+
+            <button class="clear" onclick="clearDisplay()">AC</button>
+
+            <button class="clear" onclick="deleteNumber()">DEL</button>
+
+            <button class="operator" onclick="percentage()">%</button>
+
+            <button class="operator" onclick="chooseOperator('/')">÷</button>
+
+
+            <button onclick="addNumber('7')">7</button>
+
+            <button onclick="addNumber('8')">8</button>
+
+            <button onclick="addNumber('9')">9</button>
+
+            <button class="operator" onclick="chooseOperator('*')">×</button>
+
+
+            <button onclick="addNumber('4')">4</button>
+
+            <button onclick="addNumber('5')">5</button>
+
+            <button onclick="addNumber('6')">6</button>
+
+            <button class="operator" onclick="chooseOperator('-')">−</button>
+
+
+            <button onclick="addNumber('1')">1</button>
+
+            <button onclick="addNumber('2')">2</button>
+
+            <button onclick="addNumber('3')">3</button>
+
+            <button class="operator" onclick="chooseOperator('+')">+</button>
+
+
+            <button onclick="changeSign()">+/-</button>
+
+            <button class="zero" onclick="addNumber('0')">0</button>
+
+            <button onclick="addDecimal()">.</button>
+
+            <button class="equal" onclick="calculate()">=</button>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
+
+    <script>
+
+        let display = document.getElementById("display");
+
+        let firstNumber = "";
+        let operator = "";
+        let secondNumber = "";
+
+
+        function addNumber(number) {
+
+            if (display.value == "0") {
+
+                display.value = number;
+
+            }
+
+            else {
+
+                display.value = display.value + number;
+
+            }
+
+        }
+
+
+        function addDecimal() {
+
+            if (!display.value.includes(".")) {
+
+                display.value = display.value + ".";
+
+            }
+
+        }
+
+
+        function chooseOperator(selectedOperator) {
+
+            firstNumber = display.value;
+
+            operator = selectedOperator;
+
+            display.value = "0";
+
+        }
+
+
+        function calculate() {
+
+            secondNumber = display.value;
+
+            let num1 = Number(firstNumber);
+            let num2 = Number(secondNumber);
+
+            let result;
+
+
+            if (operator == "+") {
+
+                result = num1 + num2;
+
+            }
+
+            else if (operator == "-") {
+
+                result = num1 - num2;
+
+            }
+
+            else if (operator == "*") {
+
+                result = num1 * num2;
+
+            }
+
+            else if (operator == "/") {
+
+                if (num2 == 0) {
+
+                    display.value = "Error";
+
+                    return;
+
+                }
+
+                result = num1 / num2;
+
+            }
+
+
+            display.value = result;
+
+            firstNumber = "";
+            secondNumber = "";
+            operator = "";
+
+        }
+
+
+        function clearDisplay() {
+
+            display.value = "0";
+
+            firstNumber = "";
+            secondNumber = "";
+            operator = "";
+
+        }
+
+
+        function deleteNumber() {
+
+            if (display.value.length > 1) {
+
+                display.value = display.value.slice(0, -1);
+
+            }
+
+            else {
+
+                display.value = "0";
+
+            }
+
+        }
+
+
+        function percentage() {
+
+            display.value = Number(display.value) / 100;
+
+        }
+
+
+        function changeSign() {
+
+            display.value = Number(display.value) * -1;
+
+        }
+
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key >= "0" && event.key <= "9") {
+
+                addNumber(event.key);
+
+            }
+
+            else if (event.key == "+") {
+
+                chooseOperator("+");
+
+            }
+
+            else if (event.key == "-") {
+
+                chooseOperator("-");
+
+            }
+
+            else if (event.key == "*") {
+
+                chooseOperator("*");
+
+            }
+
+            else if (event.key == "/") {
+
+                chooseOperator("/");
+
+            }
+
+            else if (event.key == "Enter") {
+
+                calculate();
+
+            }
+
+            else if (event.key == "Backspace") {
+
+                deleteNumber();
+
+            }
+
+            else if (event.key == "Escape") {
+
+                clearDisplay();
+
+            }
+
+            else if (event.key == ".") {
+
+                addDecimal();
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
